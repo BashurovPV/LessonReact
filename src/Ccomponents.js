@@ -1,87 +1,46 @@
 import React, { Component } from 'react';
-import { Rfcomponents } from './Rfcomponents';
-import Cinput_form from './Cinput_form'
+import Ccomp_child_1 from './Ccomp_child_1';
+import Ccomp_child_2 from './Ccomp_child_2';
+
 
 export default class Ccomponents extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
-            word: "Hi, world!!!",
-            visibility: false,
-            count: 0
+            inputValue: '123',
+            st_name: 'Button NOT pressed!'
         };
 
-        this.handleClick = this.handleClick.bind(this);
-
-        this.increment = this.increment.bind(this);
-        this.decrement = this.decrement.bind(this);
-        this.resetCrement = this.resetCrement.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.updateData = this.updateData.bind(this);
     }
 
-    handleClick() {
-
-        this.setState(state => ({
-            visibility: !state.visibility
-        }))
+    handleChange(event) {
+        this.setValue({
+            inputValue: event.target.value
+        })
     }
 
-    increment() {
-
-        this.setState(state => ({
-            count: state.count + 1
-        }));
+    updateData = (value) => {
+      this.setState({
+          st_name: value
+      })  
     }
-
-    decrement() {
-
-        this.setState(state => ({
-            count: state.count - 1
-        }));
-    }
-
-    resetCrement() {
-
-        this.setState({
-            count: 0
-        });
-    }
-
 
     render() {
+        return (
+            <div>
+                <p>State : {this.state.name}</p>
+                <Ccomp_child_1
+                    input={this.state.inputValue}
+                    hndlChange={this.handleChange}
+                    updateData={this.updateData} />
 
-        const lvWord = this.state.word;
-        const lvCount = this.state.count;
+                <Ccomp_child_2 input={this.state.inputValue} />
 
-        if (this.state.visibility) {
-            return (
-                <div>
-                    {/* <h1>Class component {this.props.numbers.join(',')}</h1>
-                    <h1>Доступ к state через "this.state": {this.state.word}</h1>
-                    <h1>Доступ к state через "const": {lvWord}</h1> */}
-                    
-                    <h1>Now you see me!</h1>
-                    <h2>Count = {lvCount}</h2>
-                    <button onClick={this.handleClick}>Click</button>
-
-                    <button onClick={this.increment}>Increment</button>
-                    <button onClick={this.decrement}>Decrement</button>
-                    <button onClick={this.resetCrement}>Reset</button>
-
-                    <Rfcomponents />
-                    <Cinput_form />
-                </div>
-            );
-
-        }
-        else {
-            return (
-                <div>
-                    <h1>Now you not see me!</h1>
-                    <button onClick={this.handleClick}>Click</button>
-                    <Rfcomponents />
-                </div>
-            )
-        }
+            </div>
+        );
     }
+
 }
